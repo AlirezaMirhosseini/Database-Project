@@ -9,7 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { margin } from '@mui/system';
+import { borderRadius, margin } from '@mui/system';
 // import { color } from '@mui/system';
 
 let DUMMY_TRANSACTIONS = [
@@ -77,147 +77,155 @@ export default function App() {
 
   return (
     <div>
-      <Box sx={{ backgroundColor: '#f5f5f5' }}>
-        fdksoafjlaskd
-      </Box>
-      <Grid 
-        container
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: '10vh' , fontSize: '2.2rem' }}
-      >
-        <strong>Transaciton Tracker</strong>
-      </Grid>
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 2, width: '25ch', top: 3 },
-        }}
-        noValidate
-        autoComplete="off"
-      >
+      <Box sx={{ backgroundColor: '#e9c46a' }}>
         <Grid 
           container
           alignItems="center"
           justifyContent="center"
-          style={{ minHeight: '5vh' }}
+          style={{ minHeight: '10vh' , fontSize: '2.2rem' }}
         >
-          <TextField
-            required
-            id="outlined-required"
-            label="Source Deposit"
-            type="number"
-            helperText="499 < Input < 520"
-          />
-          <TextField
-            required
-            id="outlined-required"
-            label="Destination Deposit"
-            type="number"
-            helperText="499 < Input < 520"
-          />
-          <TextField
-            required
-            id="outlined-required"
-            label="Transfer Date"
-            type="text"
-            helperText="Format : yyyy-mm-dd"
-          />
-          <TextField
-            required
-            id="outlined-required"
-            label="Transfer Time"
-            type="text"
-            helperText="Format : hh:mm:ss"
-          />
+          <strong>Transaciton Tracker</strong>
         </Grid>
-        <Grid 
-          container
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: '5vh' }}
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 2,
+              width: '25ch', top: 3 ,
+              backgroundColor: '#f4a261',
+              borderRadius: '5px'  },
+          }}
+          noValidate
+          autoComplete="off"
         >
-          <TextField
-            required
-            id="outlined-required"
-            label="Amount"
-            type="number"
-          />
-          <TextField
-            required
-            id="outlined-required"
-            label="Limit of Output"
-            type="number"
-          />
-          <TextField
-            required
-            id="outlined-required"
-            label="Sum"
-            type="number"
-          />
-        </Grid>
-      </Box>
+          <Grid 
+            container
+            alignItems="center"
+            justifyContent="center"
+            style={{ minHeight: '5vh' }}
+          >
+            <TextField
+              required
+              id="outlined-required"
+              label="Source Deposit"
+              type="number"
+              helperText="499 < Input < 520"
+            />
+            <TextField
+              required
+              id="outlined-required"
+              label="Destination Deposit"
+              type="number"
+              helperText="499 < Input < 520"
+            />
+            <TextField
+              required
+              id="outlined-required"
+              label="Transfer Date"
+              type="text"
+              helperText="Format : yyyy-mm-dd"
+            />
+            <TextField
+              required
+              id="outlined-required"
+              label="Transfer Time"
+              type="text"
+              helperText="Format : hh:mm:ss"
+            />
+          </Grid>
+          <Grid 
+            container
+            alignItems="center"
+            justifyContent="center"
+            style={{ minHeight: '5vh' }}
+          >
+            <TextField
+              required
+              id="outlined-required"
+              label="Amount"
+              type="number"
+            />
+            <TextField
+              required
+              id="outlined-required"
+              label="Limit of Output"
+              type="number"
+            />
+            <TextField
+              required
+              id="outlined-required"
+              label="Sum"
+              type="number"
+            />
+          </Grid>
+        </Box>
 
-      <Grid 
-        container
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: '10vh' }}
-      >
-        <Button variant='contained' color="success">Show Result</Button>
-      </Grid>
-      <Grid 
-        container
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: '10vh' }}
-      >
         <Grid 
           container
           alignItems="center"
           justifyContent="center"
-          style={{ minHeight: '10vh' , fontSize: '1.8rem' }}
+          style={{ minHeight: '10vh' }}
         >
-          <strong>Transaction History</strong>
+          <Button 
+            variant='contained' 
+            color="success"
+            style={{ minHeight: '7vh', minWidth: '10vw' }}
+          >
+            Show Result
+          </Button>
         </Grid>
         <Grid 
           container
           alignItems="center"
           justifyContent="center"
-          style={{ minHeight: '20vh' , margin: '5vh 5vw 5vh 5vw' }}
+          style={{ minHeight: '10vh' }}
         >
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Voucher ID</StyledTableCell>
-                  <StyledTableCell align="center">Date</StyledTableCell>
-                  <StyledTableCell align="center">Time</StyledTableCell>
-                  <StyledTableCell align="center">Amount</StyledTableCell>
-                  <StyledTableCell align="center">Source Deposit</StyledTableCell>
-                  <StyledTableCell align="center">Destination Deposit</StyledTableCell>
-                  <StyledTableCell align="center">Branch ID</StyledTableCell>
-                  <StyledTableCell align="center">Transaction Description</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {DUMMY_TRANSACTIONS.map((t) => (
-                  <StyledTableRow key={t.VoucherID}>
-                    <StyledTableCell component='th' scope='row'>{t.VoucherID}</StyledTableCell>
-                    <StyledTableCell align='center'>{t.Date}</StyledTableCell>
-                    <StyledTableCell align='center'>{t.Time}</StyledTableCell>
-                    <StyledTableCell align='center'>{t.Amount}</StyledTableCell>
-                    <StyledTableCell align='center'>{t.SourceDep}</StyledTableCell>
-                    <StyledTableCell align='center'>{t.DestinationDep}</StyledTableCell>
-                    <StyledTableCell align='center'>{t.BranchID}</StyledTableCell>
-                    <StyledTableCell align='center'>{t.Amount} Transferred.</StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Grid 
+            container
+            alignItems="center"
+            justifyContent="center"
+            style={{ minHeight: '10vh' , fontSize: '1.8rem' }}
+          >
+            <strong>Transaction History</strong>
+          </Grid>
+          <Grid 
+            container
+            alignItems="center"
+            justifyContent="center"
+            style={{ minHeight: '20vh' , margin: '5vh 5vw 5vh 5vw' }}
+          >
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Voucher ID</StyledTableCell>
+                    <StyledTableCell align="center">Date</StyledTableCell>
+                    <StyledTableCell align="center">Time</StyledTableCell>
+                    <StyledTableCell align="center">Amount</StyledTableCell>
+                    <StyledTableCell align="center">Source Deposit</StyledTableCell>
+                    <StyledTableCell align="center">Destination Deposit</StyledTableCell>
+                    <StyledTableCell align="center">Branch ID</StyledTableCell>
+                    <StyledTableCell align="center">Transaction Description</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {DUMMY_TRANSACTIONS.map((t) => (
+                    <StyledTableRow key={t.VoucherID}>
+                      <StyledTableCell component='th' scope='row'>{t.VoucherID}</StyledTableCell>
+                      <StyledTableCell align='center'>{t.Date}</StyledTableCell>
+                      <StyledTableCell align='center'>{t.Time}</StyledTableCell>
+                      <StyledTableCell align='center'>{t.Amount}</StyledTableCell>
+                      <StyledTableCell align='center'>{t.SourceDep}</StyledTableCell>
+                      <StyledTableCell align='center'>{t.DestinationDep}</StyledTableCell>
+                      <StyledTableCell align='center'>{t.BranchID}</StyledTableCell>
+                      <StyledTableCell align='center'>{t.Amount} Transferred.</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </div>
   );
 }
