@@ -54,7 +54,7 @@ let DUMMY_TRANSACTIONS = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: '#422711',
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -64,7 +64,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: '#C1793A',
+  },
+  '&:nth-of-type(even)': {
+    backgroundColor: '#CCA583',
   },
   // hide last border
   '&:last-child td, &:last-child th': {
@@ -77,7 +80,7 @@ export default function App() {
 
   return (
     <div>
-      <Box sx={{ backgroundColor: '#e9c46a' }}>
+      <Box sx={{ backgroundColor: '#ffd98b' }}>
         <Grid 
           container
           alignItems="center"
@@ -91,7 +94,7 @@ export default function App() {
           sx={{
             '& .MuiTextField-root': { m: 2,
               width: '25ch', top: 3 ,
-              backgroundColor: '#f4a261',
+              backgroundColor: '#f6923d',
               borderRadius: '5px'  },
           }}
           noValidate
@@ -168,7 +171,10 @@ export default function App() {
           <Button 
             variant='contained' 
             color="success"
-            style={{ minHeight: '7vh', minWidth: '10vw' }}
+            style={{ 
+              minHeight: '7vh',
+              minWidth: '10vw',
+              backgroundColor: '#ff6c00' }}
           >
             Show Result
           </Button>
@@ -183,7 +189,7 @@ export default function App() {
             container
             alignItems="center"
             justifyContent="center"
-            style={{ minHeight: '10vh' , fontSize: '1.8rem' }}
+            style={{ margin: '4vh 0 -2vh 0' , fontSize: '1.8rem' }}
           >
             <strong>Transaction History</strong>
           </Grid>
@@ -195,9 +201,9 @@ export default function App() {
           >
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
+                <TableHead sx={{ backgroundColor: '#422711' }}>
                   <TableRow>
-                    <StyledTableCell>Voucher ID</StyledTableCell>
+                    <StyledTableCell align="center">Voucher ID</StyledTableCell>
                     <StyledTableCell align="center">Date</StyledTableCell>
                     <StyledTableCell align="center">Time</StyledTableCell>
                     <StyledTableCell align="center">Amount</StyledTableCell>
@@ -210,7 +216,7 @@ export default function App() {
                 <TableBody>
                   {DUMMY_TRANSACTIONS.map((t) => (
                     <StyledTableRow key={t.VoucherID}>
-                      <StyledTableCell component='th' scope='row'>{t.VoucherID}</StyledTableCell>
+                      <StyledTableCell align="center" component='th' scope='row'>{t.VoucherID}</StyledTableCell>
                       <StyledTableCell align='center'>{t.Date}</StyledTableCell>
                       <StyledTableCell align='center'>{t.Time}</StyledTableCell>
                       <StyledTableCell align='center'>{t.Amount}</StyledTableCell>
