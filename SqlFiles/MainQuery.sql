@@ -423,13 +423,14 @@ CREATE OR REPLACE FUNCTION TrackRelatedTransactions (
 	
 		RETURN QUERY 
 		(
-			SELECT * from transact
-
+			SELECT * FROM trackSubsequentTransactions(_SrcDep_ , _DesDep_ , _Amount_ , _TrnDate_ , _TrnTime_ , 0 , 0) 
+				UNION
+			SELECT * FROM trackPreviousTransactions(_SrcDep_ , _DesDep_ , _Amount_ , _TrnDate_ , _TrnTime_ , 0 , 0) 
 		);
 
-	END $$;
+END $$;
 
-SELECT * FROM TrackRelatedTransactions(500 , 501 , 100000 , '2020-03-25' , '09:00:00');
+SELECT * FROM TrackRelatedTransactions(510 , 504 , 1000 , '2020-03-25' , '09:00:00');
 
 
 
