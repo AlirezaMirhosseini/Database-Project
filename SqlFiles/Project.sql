@@ -211,7 +211,10 @@ CREATE OR REPLACE PROCEDURE insert_data_to_customer ()
 CALL insert_data_to_customer();
 
 
-SELECT * from customer
+-- ***************************************** Update Description **************************************************
+
+UPDATE transact SET trn_desc = amount || ' transferred from ' || sourcedep || ' to ' || desdep;
+
 
 -- ***************************************** Question 1 **************************************************
 
