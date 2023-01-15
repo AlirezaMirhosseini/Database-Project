@@ -1,6 +1,40 @@
+-- ***************************************** Customers **************************************************
+
+CREATE TABLE IF NOT EXISTS customer (
+	
+	CID INTEGER PRIMARY KEY,
+	name VARCHAR(50) ,
+	natCode CHAR(10) UNIQUE NOT NULL CHECK(CHAR_LENGTH(natCode) = 10),
+	birthDate DATE NOT NULL,
+	Addr VARCHAR(50) NOT NULL,
+	Tel VARCHAR(12) NOT NULL UNIQUE 
+
+);
+
+CREATE OR REPLACE PROCEDURE insert_data_to_customer ()
+	LANGUAGE plpgsql
+	AS $$
+	
+	BEGIN
+		INSERT INTO customer VALUES (100 , 'Ali' , '1130603456' , '2002-10-09' , 'isfahan' , 09136666666) ,
+														(101 , 'Mohammad' , '1130603457' , '2008-10-09' , 'yazd' , 09137777777) ,
+														(102 , 'Jamshid' , '1130603458' , '2006-8-09' , 'isfahan dspaas' , 09138888888) ,
+														(103 , 'Mahdi' , '1130603459' , '2009-1-06' , 'isfahan dspaas' , 09131111111) ,
+														(104 , 'Hamed' , '1130603489' , '1986-4-19' , 'isfahan dspaas' , 09136686963) ,
+														(105 , 'Reza' , '1130603490' , '1990-10-09' , 'isfahan dspaas' , 09136666665) ,
+														(106 , 'Aref' , '1130603491' , '1999-10-01' , 'isfahan dspaas' , 091366666645) ,
+														(107 , 'Pouya' , '1130603492' , '2000-10-08' , 'isfahan dspaas' , 09136666663) ,
+														(108 , 'Mostafa' , '1130603460' , '2012-10-20' , 'isfahan dspaas' , 0913666643) ,
+														(109 , 'Nader' , '1130603461' , '1987-10-29' , 'isfahan dspaas' , 09136669996) ,
+														(110 , 'Neda' , '1130603462' , '1970-10-30' , 'isfahan dspaas' , 091366669000) ,
+														(111 , 'Zahra' , '1130603463' , '1980-10-13' , 'isfahan dspaas' , 091366668732) ,
+														(112 , 'Motahare' , '1130603464' , '2007-10-25' , 'isfahan dspaas' , 09136666987);
+	END; $$;
+	
+
+CALL insert_data_to_customer();
 
 -- ***************************************** Deposit Status **************************************************
-
 
 CREATE TABLE IF NOT EXISTS Deposit_Status (
 
@@ -21,9 +55,6 @@ CREATE OR REPLACE PROCEDURE insert_data_to_depstatus ()
 	-- ********************************
 
 call insert_data_to_depstatus();
-
-SELECT * FROM deposit_status
-
 
 -- ***************************************** Deposit Type **************************************************
 
@@ -51,11 +82,56 @@ CREATE OR REPLACE PROCEDURE insert_data_to_deptype ()
 call insert_data_to_deptype();
 
 
-SELECT * FROM deposit_type
+-- ***************************************** Deposit **************************************************
 
+
+CREATE TABLE IF NOT EXISTS Deposit (
+	
+	Dep_ID INTEGER PRIMARY KEY,
+	Dep_Type INTEGER,
+	CID INTEGER ,
+	OpenDate Date ,
+	Status INTEGER ,
+	
+	FOREIGN KEY (Dep_Type)
+			REFERENCES deposit_type (Dep_Type) ,
+	FOREIGN KEY (CID)
+			REFERENCES customer (CID) ,
+	FOREIGN KEY (Status)
+			REFERENCES deposit_status (Status)
+);
+
+
+CREATE OR REPLACE PROCEDURE insert_data_to_deposit ()
+	LANGUAGE plpgsql
+	AS $$
+	BEGIN
+	
+			INSERT INTO deposit VALUES (500 , 301 , 101 , '2023-01-28' , 400) ,
+																 (501 , 300 , 101 , '2022-11-24' , 401) ,
+																 (502 , 302 , 101 , '2019-02-03' , 400) ,
+																 (503 , 303 , 102 , '2002-05-02' , 401) ,
+																 (504 , 301 , 103 , '1990-06-05' , 401) ,
+																 (505 , 301 , 104 , '1986-10-01' , 401) ,
+																 (506 , 302 , 105 , '2021-09-11' , 401) ,
+																 (507 , 303 , 106 , '2020-07-01' , 400) ,
+																 (508 , 300 , 107 , '2017-11-21' , 400) ,
+																 (509 , 302 , 107 , '2015-12-01' , 400) ,
+																 (510 , 303 , 109 , '2019-03-29' , 401) ,
+																 (511 , 303 , 109 , '2013-02-01' , 401) ,
+																 (512 , 302 , 109 , '2006-06-02' , 400) ,
+																 (513 , 302 , 109 , '2025-08-03' , 401) ,
+																 (514 , 301 , 110 , '1980-11-07' , 400) ,
+																 (515 , 303 , 110 , '1978-01-19' , 401) ,
+																 (516 , 302 , 111 , '1999-02-01' , 400) ,
+																 (517 , 302 , 107 , '1998-04-17' , 401) ,
+																 (518 , 301 , 111 , '2000-07-15' , 400) ,
+																 (519 , 303 , 112 , '2009-11-14' , 401);
+	END; $$;
+	
+call insert_data_to_deposit();
 
 -- ***************************************** Branch ****************************************************
-
 
 CREATE TABLE IF NOT EXISTS Branch (
 
@@ -81,17 +157,12 @@ CREATE OR REPLACE PROCEDURE insert_data_to_branch ()
 		INSERT INTO branch VALUES (207 , 'Sharif' , 'Tehran' , '03133655577');
 		INSERT INTO branch VALUES (208 , 'Isfahan University of Technology' , 'KhomeiniShahr' , '03133655577');
 																	
-		COMMIT;
 -- 	
 	END; $$;
 	
 	-- ********************************
 
 call insert_data_to_branch();
-
-SELECT * from branch;
-
-
 
 -- ***************************************** Transactions ****************************************************
 
@@ -173,42 +244,6 @@ INSERT INTO transact VALUES (620 , '2022-02-20' , '09:12:00' , 90000 , 519 , 501
 														(639 , '2013-08-08' , '13:45:00' , 12345678 , 506 , 511 , 203 , 'ee toman rikhte shod be hesabe felani ... ');
 
 
-
--- ***************************************** Customers **************************************************
-
-CREATE TABLE IF NOT EXISTS customer (
-	
-	CID INTEGER PRIMARY KEY,
-	name VARCHAR(50) ,
-	natCode CHAR(10) UNIQUE NOT NULL CHECK(CHAR_LENGTH(natCode) = 10),
-	birthDate DATE NOT NULL,
-	Addr VARCHAR(50) NOT NULL,
-	Tel VARCHAR(12) NOT NULL UNIQUE 
-
-);
-
-CREATE OR REPLACE PROCEDURE insert_data_to_customer ()
-	LANGUAGE plpgsql
-	AS $$
-	
-	BEGIN
-		INSERT INTO customer VALUES (100 , 'Ali' , '1130603456' , '2002-10-09' , 'isfahan' , 09136666666) ,
-														(101 , 'Mohammad' , '1130603457' , '2008-10-09' , 'yazd' , 09137777777) ,
-														(102 , 'Jamshid' , '1130603458' , '2006-8-09' , 'isfahan dspaas' , 09138888888) ,
-														(103 , 'Mahdi' , '1130603459' , '2009-1-06' , 'isfahan dspaas' , 09131111111) ,
-														(104 , 'Hamed' , '1130603489' , '1986-4-19' , 'isfahan dspaas' , 09136686963) ,
-														(105 , 'Reza' , '1130603490' , '1990-10-09' , 'isfahan dspaas' , 09136666665) ,
-														(106 , 'Aref' , '1130603491' , '1999-10-01' , 'isfahan dspaas' , 091366666645) ,
-														(107 , 'Pouya' , '1130603492' , '2000-10-08' , 'isfahan dspaas' , 09136666663) ,
-														(108 , 'Mostafa' , '1130603460' , '2012-10-20' , 'isfahan dspaas' , 0913666643) ,
-														(109 , 'Nader' , '1130603461' , '1987-10-29' , 'isfahan dspaas' , 09136669996) ,
-														(110 , 'Neda' , '1130603462' , '1970-10-30' , 'isfahan dspaas' , 091366669000) ,
-														(111 , 'Zahra' , '1130603463' , '1980-10-13' , 'isfahan dspaas' , 091366668732) ,
-														(112 , 'Motahare' , '1130603464' , '2007-10-25' , 'isfahan dspaas' , 09136666987);
-	END; $$;
-	
-
-CALL insert_data_to_customer();
 
 
 -- ***************************************** Update Description **************************************************
@@ -431,7 +466,3 @@ CREATE OR REPLACE FUNCTION TrackRelatedTransactions (
 END $$;
 
 SELECT * FROM TrackRelatedTransactions(510 , 504 , 1000 , '2020-03-25' , '09:00:00');
-
-
-
-
