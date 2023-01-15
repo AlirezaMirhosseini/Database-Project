@@ -327,11 +327,11 @@ SELECT * FROM trackPreviousTransactions(508 , 505 , 100000 , '2020-03-25' , '09:
 
 
 
--- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Track Related Transactions $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Track Subsequent Transactions $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 
-CREATE OR REPLACE FUNCTION followRelatedTransaction (
+CREATE OR REPLACE FUNCTION trackSubsequentTransactions (
 	
 	_SrcDep_ INTEGER ,
 	_DesDep_ INTEGER ,
@@ -367,7 +367,7 @@ CREATE OR REPLACE FUNCTION followRelatedTransaction (
 					i = i + 1;
 
 					RETURN QUERY  
-					SELECT * FROM followRelatedTransaction(temprow.sourcedep , temprow.desdep , temprow.amount , temprow.trndate , temprow.trntime , 0 , 0);
+					SELECT * FROM trackSubsequentTransactions(temprow.sourcedep , temprow.desdep , temprow.amount , temprow.trndate , temprow.trntime , 0 , 0);
 					
 				END IF;
 	 END LOOP;
@@ -392,7 +392,7 @@ END $$;
 
 
 
-SELECT * FROM followRelatedTransaction(500 , 501 , 100000 , '2020-03-25' , '09:00:00' , 0 , 0);
+SELECT * FROM trackSubsequentTransactions(500 , 501 , 100000 , '2020-03-25' , '09:00:00' , 0 , 0);
 
 
 -- SELECT min(t2.trndate) FROM 
@@ -400,3 +400,37 @@ SELECT * FROM followRelatedTransaction(500 , 501 , 100000 , '2020-03-25' , '09:0
 -- (t2.trndate = '2000-03-25' AND t2.trntime > '09:00:00')
 
 -- SELECT * from transact WHERE sourcedep = 501
+
+
+
+-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Union of that Functions $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+CREATE OR REPLACE FUNCTION TrackRelatedTransactions (
+	_SrcDep_ INTEGER ,
+	_DesDep_ INTEGER ,
+	_Amount_ BIGINT ,
+	_TrnDate_ Date ,
+	_TrnTime_ VARCHAR(15)
+)
+	RETURNS TABLE (VoucherId VARCHAR(10) , TrnDate DATE , TrnTime VARCHAR(15) , Amount BIGINT , 
+						SourceDep INTEGER , DesDep INTEGER , Branch_ID INTEGER , Trn_Desc VARCHAR(100))
+	LANGUAGE plpgsql
+
+	AS $$
+	
+	BEGIN
+	
+		RETURN QUERY 
+		(
+			SELECT * from transact
+
+		);
+
+	END $$;
+
+SELECT * FROM TrackRelatedTransactions(500 , 501 , 100000 , '2020-03-25' , '09:00:00');
+
+
+
+
