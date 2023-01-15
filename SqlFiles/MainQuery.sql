@@ -250,6 +250,11 @@ INSERT INTO transact VALUES (620 , '2022-02-20' , '09:12:00' , 90000 , 519 , 501
 
 UPDATE transact SET trn_desc = amount || ' transferred from ' || sourcedep || ' to ' || desdep;
 
+UPDATE transact SET amount = amount / 1000 WHERE amount > 1000000;
+
+UPDATE transact SET amount = amount / 100 WHERE amount > 9999;
+
+
 
 -- ***************************************** Question 1 **************************************************
 
