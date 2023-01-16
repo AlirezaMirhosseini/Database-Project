@@ -43,26 +43,30 @@ export default function App() {
    const [amount, setAmount] = useState(null);
    const [transactionResult, setTransactionResult] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
-
    const showResultHandler = async () => {
-      switch (null) {
-         case srcDep:
-            toast.error("حساب مبدا را پر کنید ... ");
-            return;
-         case destDep:
-            toast.error("حساب مقصد را پر کنید ... ");
-            return;
-         case amount:
-            toast.error("مقدار تراکنش را پر کنید ... ");
-            return;
-         case transferDate:
-            toast.error("تاریخ انتقال را پر کنید ... ");
-            return;
-         case transferTime:
-            toast.error("زمان انتقال را پر کنید ... ");
-            return;
-         default:
-            break;
+      if(!srcDep){
+         toast.error("حساب مبدا را پر کنید ... ");
+         return;
+      }
+      else if(!destDep){
+         toast.error("حساب مقصد را پر کنید ... ");
+         return;
+      }
+      else if(!destDep){
+         toast.error("حساب مقصد را پر کنید ... ");
+         return;
+      }
+      else if(!amount){
+         toast.error("مقدار تراکنش را پر کنید ... ");
+         return;
+      }
+      else if(!transferDate){
+         toast.error("تاریخ انتقال را پر کنید ... ");
+         return;
+      }
+      else if(!transferTime){
+         toast.error("زمان انتقال را پر کنید ... ");
+         return;
       }
       try {
          setIsLoading(true);
